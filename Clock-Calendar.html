@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ovadia Technologies Binary Clock + Calendar</title>
+	<link rel="stylesheet" href="style.css">
+	<style>
+		.dot {
+			width: 50px;
+			height: 50px;
+			border-radius: 10px;
+			margin-top: 4px;
+			box-shadow: inset 0px 0px 7px 3px grey, 0 0 20px 2px grey;
+			
+		}
+
+		.on {
+			background-color: lime;
+			box-shadow: inset 0px 0px 7px 3px grey, 0 0 20px 2px lawngreen;
+		}
+
+		#h1, #h2, 
+		#m1, #m2,
+		#s1, #s2,
+		#d1, #d2, 
+		#mo1, #mo2, 
+		#y1, #y2 {
+			display: inline-table;
+		}
+		.hrs,.min,.sec,.dys,.mnt,.yrs {
+			width: 100px;
+			height: 25px;
+			display: inline-block;
+			margin-top: 5px;
+			line-height: 25px;
+		    text-align: center;
+		    font-size: large;
+		    color: limegreen;
+		    font-weight: bold;
+			box-shadow: inset 0px 0px 7px 3px grey, 0 0 20px 2px grey;
+			padding: 2px;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			border-radius: 10px;
+			text-shadow: -1px 1px 0px grey;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="main.js"></script>
+	<script>
+		$(document).ready(function(){
+		    $(function() {
+		        setInterval(function() {
+		            var d = new Date();
+		            var hrs = d.getHours();
+		            var min = d.getMinutes();
+		            var sec = d.getSeconds();
+		            var day = d.getDate();
+		            var mon = d.getMonth()+1;
+		            var yrs = d.getFullYear();
+
+		            var h = hrs.toString().split('');
+		            var m = min.toString().split('');
+		            var s = sec.toString().split('');
+		            var d = day.toString().split('');
+		            var mo = mon.toString().split('');
+		            var y = yrs.toString().split('');
+
+		            var binary = {
+		                '0': [0,0,0,0],
+		                '1': [0,0,0,1],
+		                '2': [0,0,1,0],
+		                '3': [0,0,1,1],
+		                '4': [0,1,0,0],
+		                '5': [0,1,0,1],
+		                '6': [0,1,1,0],
+		                '7': [0,1,1,1],
+		                '8': [1,0,0,0],
+		                '9': [1,0,0,1]
+		            }
+		        
+		            if(h[0] == 1){
+		                $("#h1dot1").addClass("on");     
+		            } else if (h[0] == 2) {
+		                $("#h1dot0").addClass("on");  
+		            } else {
+		                $("#h1dot0").removeClass("on");  
+		                $("#h1dot1").removeClass("on");    
+		            }
+
+		            for (i in binary[h[1]]) { 
+		                if(binary[h[1]][i] == 1){
+		                    $("#hdot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#hdot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[m[0]]) { 
+		                if(binary[m[0]][i] == 1){
+		                    $("#m1dot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#m1dot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[m[1]]) { 
+		                if(binary[m[1]][i] == 1){
+		                    $("#mdot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#mdot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[s[0]]) { 
+		                if(binary[s[0]][i] == 1){
+		                    $("#s1dot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#s1dot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[s[1]]) { 
+		                if(binary[s[1]][i] == 1){
+		                    $("#sdot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#sdot"+i.toString()).removeClass("on");  
+		                }
+		            }
+
+		            // calendar
+		            for (i in binary[d[0]]) { 
+		                if(binary[d[0]][i] == 1){
+		                    $("#d1dot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#d1dot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[d[1]]) { 
+		                if(binary[d[1]][i] == 1){
+		                    $("#ddot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#ddot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[mo[0]]) { 
+		                if(binary[mo[0]][i] == 1){
+		                    $("#modot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#modot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[mo[1]]) { 
+		                if(binary[mo[1]][i] == 1){
+		                    $("#mo1dot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#mo1dot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[y[2]]) { 
+		                if(binary[y[2]][i] == 1){
+		                    $("#y1dot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#y1dot"+i.toString()).removeClass("on");  
+		                }
+		            }
+		            for (i in binary[y[3]]) { 
+		                if(binary[y[3]][i] == 1){
+		                    $("#ydot"+i.toString()).addClass("on");   
+		                } else {
+		                    $("#ydot"+i.toString()).removeClass("on");  
+		                }
+		            }
+
+		        }, 200);
+		    });
+
+		});
+	</script>
+</head>
+<body>
+	<div class="clock">
+		<div id="h1">
+			<div id="h1dot0" class="dot"></div>
+			<div id="h1dot1" class="dot"></div>
+		</div>
+		<div id="h2">
+			<div id="hdot0" class="dot"></div>
+			<div id="hdot1" class="dot"></div>
+			<div id="hdot2" class="dot"></div>
+			<div id="hdot3" class="dot"></div>
+		</div>
+		<div id="m1">
+			<div id="m1dot1" class="dot"></div>
+			<div id="m1dot2" class="dot"></div>
+			<div id="m1dot3" class="dot"></div>
+		</div>
+		<div id="m2">
+			<div id="mdot0" class="dot"></div>
+			<div id="mdot1" class="dot"></div>
+			<div id="mdot2" class="dot"></div>
+			<div id="mdot3" class="dot"></div>
+		</div>
+		<div id="s1">
+			<div id="s1dot1" class="dot"></div>
+			<div id="s1dot2" class="dot"></div>
+			<div id="s1dot3" class="dot"></div>
+		</div>
+		<div id="s2">
+			<div id="sdot0" class="dot"></div>
+			<div id="sdot1" class="dot"></div>
+			<div id="sdot2" class="dot"></div>
+			<div id="sdot3" class="dot"></div>
+		</div>
+		<div class="indication">
+			<div class="hrs">Hours</div>
+			<div class="min">Minutes</div>
+			<div class="sec">Seconds</div>
+		</div>
+	</div>
+	<div class="calendar">
+		<div id="d1">
+			<div id="d1dot2" class="dot"></div>
+			<div id="d1dot3" class="dot"></div>
+		</div>
+		<div id="d2">
+			<div id="ddot0" class="dot"></div>
+			<div id="ddot1" class="dot"></div>
+			<div id="ddot2" class="dot"></div>
+			<div id="ddot3" class="dot"></div>
+		</div>
+		<div id="mo1">
+			<div id="mo1dot2" class="dot"></div>
+			<div id="mo1dot3" class="dot"></div>
+		</div>
+		<div id="mo2">
+			<div id="modot0" class="dot"></div>
+			<div id="modot1" class="dot"></div>
+			<div id="modot2" class="dot"></div>
+			<div id="modot3" class="dot"></div>
+		</div>
+		<div id="y1">
+			<div id="y1dot0" class="dot"></div>
+			<div id="y1dot1" class="dot"></div>
+			<div id="y1dot2" class="dot"></div>
+			<div id="y1dot3" class="dot"></div>
+		</div>
+		<div id="y2">
+			<div id="ydot0" class="dot"></div>
+			<div id="ydot1" class="dot"></div>
+			<div id="ydot2" class="dot"></div>
+			<div id="ydot3" class="dot"></div>
+		</div>
+		<div class="indication">
+			<div class="dys">Days</div>
+			<div class="mnt">Months</div>
+			<div class="yrs">Years</div>
+		</div>
+	</div>
+</body>
+</html>
